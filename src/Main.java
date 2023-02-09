@@ -14,11 +14,12 @@ public class Main {
         boolean end = false;
 
         while (!end) {
+            System.out.println("\n");
             System.out.println("1. Add Branch");
-            System.out.println("2. Add bike to Branch");
-            System.out.println("3. Search for bike in Branch");
+            System.out.println("2. Add Bike to Branch");
+            System.out.println("3. Search for Bike in Branch");
             System.out.println("4. Remove bike from Branch");
-            System.out.println("5. Display all branches and their bikes");
+            System.out.println("5. Display all Branches and their Bikes");
             System.out.println("6. End");
             System.out.print("Enter your choice: ");
             int choice = sc.nextInt();
@@ -26,7 +27,7 @@ public class Main {
             switch (choice) {
 
                 case 1:
-                    System.out.print("Enter the showroom name: ");
+                    System.out.print("Enter the branch name: ");
                     String branchName = sc.next();
 
                     Branches branch = new Branches(branchName, bikes);
@@ -35,7 +36,7 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.print("Enter the branches name: ");
+                    System.out.print("Enter the branch name: ");
                     String currentbranchName = sc.next();
                     Branches currentbranch = null;
                     for (Branches s : branches) {
@@ -58,7 +59,7 @@ public class Main {
                     System.out.println("Bike added to branch successfully!");
                     break;
                 case 3:
-                    System.out.print("Enter the branches name: ");
+                    System.out.print("Enter the branch name: ");
                     currentbranchName = sc.next();
                     currentbranch = null;
                     for (Branches s : branches) {
@@ -70,18 +71,18 @@ public class Main {
                     if (currentbranch == null) {
                         System.out.println("Branch not found!");
                         break;
-
                     }
+
                     System.out.print("Enter the bike name to search: ");
                     String searchBikeName = sc.next();
                     Bike searchBike = currentbranch.searchBike(searchBikeName);
-                    if (searchBike == null) {
-                        System.out.println("Bike found in showroom: " + searchBike.getName() + " with price: " + searchBike.getPrice());
+                    if (searchBike != null) {
+                        System.out.println("Bike found in branch: " + searchBike.getName() + " with price: " + searchBike.getPrice());
                     }
                     break;
 
                 case 4:
-                    System.out.print("Enter the branches name: ");
+                    System.out.print("Enter the branch name: ");
                     currentbranchName = sc.next();
                     currentbranch = null;
                     for (Branches s : branches) {
@@ -124,8 +125,8 @@ public class Main {
                     System.out.println("Invalid choice, try again");
                     break;
             }
-            }
         }
     }
+}
 
 
