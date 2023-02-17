@@ -4,12 +4,16 @@ import Vehicle.Bike;
 import Vehicle.Car;
 import Vehicle.Vehicle;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
 
 public class Branches {
     String name;
     ArrayList<Bike> bikes;
-    ArrayList<Car> cars;
+    static ArrayList<Car> cars;
 
     public Branches(String name, ArrayList<Bike> bikes, ArrayList<Car> cars) {
         this.name = name;
@@ -81,7 +85,11 @@ public class Branches {
         cars.add(car);
     }
 
-    public static void buyVehicle(Branches cb, String v_name) {
+    public static Boolean buyVehicle(Branches cb, String v_name) {
+
+        Scanner sc = new Scanner(System.in);
+
+        boolean bill = false;
 
         for (Bike b : cb.getBikes()) {
             String bike_name = b.getName();
@@ -101,8 +109,63 @@ public class Branches {
             }
             if (car_name.equals(v_name)) {
                 System.out.println("You have ordered a "+type + c.getName() + " of Price: " + c.getPrice() + "\nServices you get with the Car: " + "\nWarrenty: " + c.getWarrenty() + "\nMaintainance Service:" + c.getMaintainance());
+                System.out.println("Confirm(Y/N)?");
+                String confirm = sc.next();
+                if(confirm.equals("Y")){
+                    bill = true;
+                }
             }
         }
+        return bill;
     }
+
+    public static void generateBill(Branches b,String v_name,String c_name) {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        Date date = new Date();
+        double subtotal = 0;
+        double vat = 0;
+        double total = 0;
+
+
+        // Print bill header
+        System.out.println("+---------------------------------------------------------+");
+        System.out.println("|                     CAR SALES RECEIPT                    |");
+        System.out.println("+---------------------------------------------------------+");
+        System.out.printf("| Date:          %s                               |\n", date.toString());
+        System.out.println("|                                                         |");
+        System.out.println("| CUSTOMER INFORMATION:                                   |");
+        System.out.printf("| Name:          "+c_name+                              "|\n");
+        System.out.println("|                                                         |");
+        System.out.println("| PRODUCT INFORMATION:                                    |");
+        System.out.println("|                                                         |");
+        System.out.println("| Make/Model          Electric      Price (excluding VAT) |");
+        System.out.println("| -------------------- ---------- ----------------------- |");
+
+        // Print each car in the bill
+        for (Car car : cars) {
+            boolean electric = car.isElectric();
+            String type;
+            if (electric) {
+                type = "electric car ";
+            } else {
+                type = "non-electric car";
+            }
+
+            System.out.printf("| "+car.getName()+ "                    "+type+"       "+car.getPrice()+"   |\n");
+            subtotal += car.getPrice();
+        }
+
+        // Calculate and print totals
+        vat = subtotal * 0.13;
+        total = subtotal + vat;
+        System.out.println("|                                                         |");
+        System.out.printf("| SUBTOTAL:                                          "+subtotal+" |\n");
+        System.out.printf("| VAT (13%%):                                        "+vat+" |\n");
+        System.out.printf("| TOTAL:                                             "+total+" |\n");
+        System.out.println("|                                                         |");
+        System.out.println("| THANK YOU FOR YOUR PURCHASE!                             |");
+        System.out.println("+---------------------------------------------------------+");
+    }
+
 }
 

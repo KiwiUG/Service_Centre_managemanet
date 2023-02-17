@@ -168,10 +168,15 @@ public class Main {
                         System.out.println("Branch not found!");
                         break;
                     }
-
+                    System.out.println("Enter Your Name: ");
+                    String name = sc.next();
                     System.out.print("Enter the vehicle name: ");
                     String vehicleName = sc.next();
-                    Branches.buyVehicle(currentbranch, vehicleName);
+                    boolean bill = Branches.buyVehicle(currentbranch, vehicleName);
+                    if(bill){
+                        Branches.generateBill(currentbranch, vehicleName,name);
+                        end=true;
+                    }
                     break;
                 case 4:
                     end = true;
